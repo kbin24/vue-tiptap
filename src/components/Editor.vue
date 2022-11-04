@@ -1,6 +1,7 @@
 <template>
     <div class="editor" v-if="editor" :style="{ width }">
         <MenuBar class="editor-header" :editor="editor"></MenuBar>
+        <FloatingMenuVue :editor="editor"></FloatingMenuVue>
         <editor-content class="editor-content" :editor="editor"></editor-content>
     </div>
 </template>
@@ -14,14 +15,14 @@ import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
-
+import Placeholder from '@tiptap/extension-placeholder'
+import CommandButton from './MenuCommands/CommandButton.vue';
+import FloatingMenuVue from './FloatingMenu.vue';
 
 const CustomTableCell = TableCell.extend({
     addAttributes() {
         return {
             ...this.parent?.(),
-
-
             // 添加新的属性
             backgroundColor: {
                 default: null,
@@ -39,7 +40,9 @@ const CustomTableCell = TableCell.extend({
 export default defineComponent({
     components: {
         EditorContent,
-        MenuBar
+        MenuBar,
+        CommandButton,
+        FloatingMenuVue
     },
     props: {
         width: {
@@ -53,7 +56,7 @@ export default defineComponent({
     },
     setup(props, { emit }) {
         const editor = useEditor({
-            content: props.html,
+            // content: props.html,
             extensions: [
                 StarterKit,
                 Image,
@@ -62,7 +65,19 @@ export default defineComponent({
                 }),
                 TableRow,
                 TableHeader,
-                CustomTableCell
+                CustomTableCell,
+                Placeholder.configure({
+                    placeholder:({node}) =>{
+                        console.log(node)
+                        if(node.type.name === 'heading'){
+                            if(node.attrs.level === 1){
+                                return 'H1'
+                            }
+                            return 'H2'
+                        }
+                        return 'placeholder'
+                    }
+                })
             ],
             onUpdate: () => {
                 console.log(editor.value.getHTML())
@@ -80,12 +95,15 @@ export default defineComponent({
 
 <style lang="scss">
 .editor {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    max-height: 26rem;
+    max-height: 100%;
     color: #0d0d0d;
     background-color: #fff;
-    border: 3px solid #0d0d0d;
+    // border: 3px solid #0d0d0d;
     border-radius: .75rem;
 
     &-header {
@@ -100,9 +118,9 @@ export default defineComponent({
     &-content {
         padding: .7rem .5rem;
         flex: 1 1 auto;
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        // overflow-x: hidden;
+        // overflow-y: auto;
+        // -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -242,7 +260,41 @@ export default defineComponent({
     p {
       margin: 0;
     }
+
   }
+}
+
+/* Placeholder (at the top) */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror p.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror h2.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror h1.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
 }
 
 

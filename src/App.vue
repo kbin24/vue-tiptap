@@ -31,22 +31,7 @@ const editorHtml1 = {
   ]
 }
 
-const editorHtml = `
-<table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>singer</td>
-              <td>songwriter</td>
-              <td>actress</td>
-            </tr>
-          </tbody>
-        </table>
-`
+const editorHtml = `<p>测试内容</p>`
 
 </script>
 
