@@ -15,7 +15,8 @@ import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
-import Placeholder from '@tiptap/extension-placeholder'
+// import Placeholder from '@tiptap/extension-placeholder'
+import Placeholder from '../extensions/placeholder'
 import CommandButton from './MenuCommands/CommandButton.vue';
 import FloatingMenuVue from './FloatingMenu.vue';
 
@@ -66,18 +67,19 @@ export default defineComponent({
                 TableRow,
                 TableHeader,
                 CustomTableCell,
-                Placeholder.configure({
-                    placeholder:({node}) =>{
-                        console.log(node)
-                        if(node.type.name === 'heading'){
-                            if(node.attrs.level === 1){
-                                return 'H1'
-                            }
-                            return 'H2'
-                        }
-                        return 'placeholder'
-                    }
-                })
+                // Placeholder.configure({
+                //     placeholder:({node}) =>{
+                //         console.log(node)
+                //         if(node.type.name === 'heading'){
+                //             if(node.attrs.level === 1){
+                //                 return 'H1'
+                //             }
+                //             return 'H2'
+                //         }
+                //         return 'placeholder'
+                //     }
+                // })
+                Placeholder
             ],
             onUpdate: () => {
                 console.log(editor.value.getHTML())
