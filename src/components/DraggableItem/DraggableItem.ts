@@ -17,6 +17,7 @@ export default Node.create({
       {
         tag: 'div[data-type="draggable-item"]',
       },
+      
     ]
   },
 
@@ -26,5 +27,14 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(Component)
+  },
+
+  addCommands() {
+      return{
+        addDraggBox: ()=>({commands})=>{
+            return commands.insertContent('<div data-type="draggable-item"> </div>')
+            // return commands.setNode(this.name)
+        }
+      }
   },
 })

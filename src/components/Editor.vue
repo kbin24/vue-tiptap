@@ -22,6 +22,8 @@ import FloatingMenuVue from './FloatingMenu.vue';
 import BubbleMenuVue from './BubbleMenu.vue';
 import VueComponent from '../components/InteractiveNode/Extensions'
 import DraggableItem from './DraggableItem/DraggableItem';
+import Paragraph from '@tiptap/extension-paragraph';
+import Image from '@tiptap/extension-image'
 const CustomTableCell = TableCell.extend({
     addAttributes() {
         return {
@@ -60,12 +62,12 @@ export default defineComponent({
     },
     setup(props, { emit }) {
         const editor = useEditor({
-            // content: props.html,
-            content: `
-                <div data-type="draggable-item">
-                    <p>Follow by a fancy draggable item</p>
-                </div>
-            `,
+            content: props.html,
+            // content: `
+            //     <div data-type="draggable-item">
+            //         <p>Follow by a fancy draggable item</p>
+            //     </div>
+            // `,
             extensions: [
                 StarterKit,
                 Image,
@@ -77,7 +79,10 @@ export default defineComponent({
                 CustomTableCell,
                 Placeholder,
                 VueComponent,
-                DraggableItem
+                DraggableItem,
+                Paragraph.configure({
+                    draggable: true
+                })
             ],
             onUpdate: () => {
                 // console.log(editor.value.getHTML())
@@ -86,12 +91,12 @@ export default defineComponent({
             }
         })
 
-        console.log('123',editor)
+        console.log('123', editor)
         return {
             editor
         }
     }
-    
+
 })
 </script>
 
@@ -214,100 +219,106 @@ export default defineComponent({
     }
 
     table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
 
-    td,
-    th {
-      min-width: 1em;
-      border: 2px solid #ced4da;
-      padding: 3px 5px;
-      vertical-align: top;
-      box-sizing: border-box;
-      position: relative;
+        td,
+        th {
+            min-width: 1em;
+            border: 2px solid #ced4da;
+            padding: 3px 5px;
+            vertical-align: top;
+            box-sizing: border-box;
+            position: relative;
 
-      > * {
-        margin-bottom: 0;
-      }
+            >* {
+                margin-bottom: 0;
+            }
+        }
+
+        th {
+            font-weight: bold;
+            text-align: left;
+            background-color: #f1f3f5;
+        }
+
+        .selectedCell:after {
+            z-index: 2;
+            position: absolute;
+            content: "";
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(200, 200, 255, 0.4);
+            pointer-events: none;
+        }
+
+        .column-resize-handle {
+            position: absolute;
+            right: -2px;
+            top: 0;
+            bottom: -2px;
+            width: 4px;
+            background-color: #adf;
+            pointer-events: none;
+        }
+
+        p {
+            margin: 0;
+        }
+
     }
-
-    th {
-      font-weight: bold;
-      text-align: left;
-      background-color: #f1f3f5;
-    }
-
-    .selectedCell:after {
-      z-index: 2;
-      position: absolute;
-      content: "";
-      left: 0; right: 0; top: 0; bottom: 0;
-      background: rgba(200, 200, 255, 0.4);
-      pointer-events: none;
-    }
-
-    .column-resize-handle {
-      position: absolute;
-      right: -2px;
-      top: 0;
-      bottom: -2px;
-      width: 4px;
-      background-color: #adf;
-      pointer-events: none;
-    }
-
-    p {
-      margin: 0;
-    }
-
-  }
 }
 
 /* Placeholder (at the top) */
 .ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #adb5bd;
-  pointer-events: none;
-  height: 0;
+    content: attr(data-placeholder);
+    float: left;
+    color: #adb5bd;
+    pointer-events: none;
+    height: 0;
 }
 
 .ProseMirror p.is-empty::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #adb5bd;
-  pointer-events: none;
-  height: 0;
+    content: attr(data-placeholder);
+    float: left;
+    color: #adb5bd;
+    pointer-events: none;
+    height: 0;
 }
 
-.ProseMirror h2.is-empty::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #adb5bd;
-  pointer-events: none;
-  height: 0;
+.ProseMirror {
+    h2.is-empty::before,
+    h1.is-empty::before{
+        content: attr(data-placeholder);
+        float: left;
+        color: #adb5bd;
+        pointer-events: none;
+        height: 0;
+    }
 }
 
-.ProseMirror h1.is-empty::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #adb5bd;
-  pointer-events: none;
-  height: 0;
-}
+// .ProseMirror h1.is-empty::before {
+//     content: attr(data-placeholder);
+//     float: left;
+//     color: #adb5bd;
+//     pointer-events: none;
+//     height: 0;
+// }
 
 
 
 .tableWrapper {
-  padding: 1rem 0;
-  overflow-x: auto;
+    padding: 1rem 0;
+    overflow-x: auto;
 }
 
 .resize-cursor {
-  cursor: ew-resize;
-  cursor: col-resize;
+    cursor: ew-resize;
+    cursor: col-resize;
 }
 </style>

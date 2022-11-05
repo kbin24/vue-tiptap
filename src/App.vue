@@ -31,7 +31,10 @@ const editorHtml1 = {
   ]
 }
 
-const editorHtml = `<p>测试内容</p>`
+const editorHtml = `
+  <p>1233</p>
+  <img src="https://source.unsplash.com/8xznAGy4HcY/800x400" />
+`
 
 </script>
 

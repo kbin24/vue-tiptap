@@ -2,11 +2,11 @@
     <node-view-wrapper class="vue-component">
       <span class="label">Vue Component</span>
   
-      <div class="content">
+      <!-- <div class="content">
         <el-button @click="increase">
           This button has been clicked {{ node.attrs.count }} times.
         </el-button>
-      </div>
+      </div> -->
 
       <node-view-content class="content"></node-view-content>
     </node-view-wrapper>
@@ -29,7 +29,7 @@ import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
   
   <style lang="scss">
   .vue-component {
-    background: #FAF594;
+    background: #fff;
     border: 3px solid #0D0D0D;
     border-radius: 0.5rem;
     margin: 1rem 0;

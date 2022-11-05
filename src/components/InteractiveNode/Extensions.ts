@@ -8,9 +8,9 @@ export default Node.create({
 
   group: 'block',
 
-  content: 'inline*',
+  content: 'block+',
 
-
+  //解析HTML
   parseHTML() {
     return [
       {
@@ -19,20 +19,36 @@ export default Node.create({
     ]
   },
 
+  //渲染HTML
   renderHTML({ HTMLAttributes }) {
     // 这里0的作用是删除键遇到定义的区块时会整个一起删除
     return ['vue-component', mergeAttributes(HTMLAttributes),0]
   },
 
+  //添加节点视图
   addNodeView() {
     return VueNodeViewRenderer(Component)
   },
 
+  //添加指令
   addCommands(){
     return {
-      setVueComponent: ()=>({commands}) =>{
-        return commands.setNode(this.name)
+      setVueComponent: attr => ({ commands, editor }) => {
+        // const latexNode = editor.schema.nodes.latexInline.create({
+        //   latex: attributes?.latexString ?? ""
+        // });
+        console.log(attr);
+        
+        return commands.insertContent('<vue-component> </vue-component');
+        // return commands.setNode(this.name)
       }
     }
-  }
+  },
+
+  //添加快捷键
+  addKeyboardShortcuts() {
+    return {
+
+    }
+  },
 })

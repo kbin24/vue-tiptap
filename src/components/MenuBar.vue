@@ -5,6 +5,7 @@
             <menu-item v-else :key="index" v-bind="item" />
         </template>
         <el-button @click="addContent">test</el-button>
+        <el-button @click="addDragBox">drag</el-button>
     </div>
 </template>
   
@@ -224,9 +225,14 @@ export default {
             props.editor.chain().focus().setVueComponent().run()
             // props.editor.chain().focus().toggleBold().run()
         }
+
+        const addDragBox = ()=>{
+            props.editor.chain().focus().addDraggBox().run()
+        }
         return {
             items,
-            addContent
+            addContent,
+            addDragBox
         }
     },
 }
