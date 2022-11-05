@@ -5,7 +5,6 @@ const Placeholder = TiptapPlaceholder.extend({
         return{
             ...this.parent?.(),
             placeholder: ({ node }) => {
-                console.log(node)
                 if (node.type.name === 'heading') {
                     if (node.attrs.level === 1) {
                         return 'H1'

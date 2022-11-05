@@ -2,6 +2,7 @@
     <div class="editor" v-if="editor" :style="{ width }">
         <MenuBar class="editor-header" :editor="editor"></MenuBar>
         <FloatingMenuVue :editor="editor"></FloatingMenuVue>
+        <BubbleMenuVue :editor="editor"></BubbleMenuVue>
         <editor-content class="editor-content" :editor="editor"></editor-content>
     </div>
 </template>
@@ -15,11 +16,11 @@ import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
-// import Placeholder from '@tiptap/extension-placeholder'
 import Placeholder from '../extensions/placeholder'
 import CommandButton from './MenuCommands/CommandButton.vue';
 import FloatingMenuVue from './FloatingMenu.vue';
-
+import BubbleMenuVue from './BubbleMenu.vue';
+import VueComponent from '../components/InteractiveNode/Extensions'
 const CustomTableCell = TableCell.extend({
     addAttributes() {
         return {
@@ -43,7 +44,8 @@ export default defineComponent({
         EditorContent,
         MenuBar,
         CommandButton,
-        FloatingMenuVue
+        FloatingMenuVue,
+        BubbleMenuVue
     },
     props: {
         width: {
@@ -58,6 +60,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const editor = useEditor({
             // content: props.html,
+            // content: `<vue-component count="0"></vue-component>`,
             extensions: [
                 StarterKit,
                 Image,
@@ -67,26 +70,17 @@ export default defineComponent({
                 TableRow,
                 TableHeader,
                 CustomTableCell,
-                // Placeholder.configure({
-                //     placeholder:({node}) =>{
-                //         console.log(node)
-                //         if(node.type.name === 'heading'){
-                //             if(node.attrs.level === 1){
-                //                 return 'H1'
-                //             }
-                //             return 'H2'
-                //         }
-                //         return 'placeholder'
-                //     }
-                // })
-                Placeholder
+                Placeholder,
+                VueComponent
             ],
             onUpdate: () => {
-                console.log(editor.value.getHTML())
+                // console.log(editor.value.getHTML())
                 // console.log(editor.value.getJSON())
-                emit('update:html', editor.value.getHTML())
+                // emit('update:html', editor.value.getHTML())
             }
         })
+
+        console.log('123',editor)
         return {
             editor
         }

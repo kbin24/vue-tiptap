@@ -35,9 +35,7 @@ const props = defineProps({
 
 const iconUrl = ref(remixiconUrl)
 
-onMounted(() => {
-    console.log(props)
-})
+
 
 </script>
 

@@ -1,23 +1,23 @@
 <template>
-    <FloatingMenu :editor="editor">
-        <div class="floating-menu">
-            <template v-for="(item, index) in Extensions">
-                <CommandButtonVue v-bind="item" />
-            </template>
+    <BubbleMenu :editor="editor" :tippy-options="{duration: 100}">
+        <div class="bubble-menu">
+            <template v-for="(item,index) in Extensions">
+            <CommandButtonVue v-bind="item" />
+        </template>
         </div>
-    </FloatingMenu>
+    </BubbleMenu>
 </template>
 
 <script setup>
-import { FloatingMenu } from '@tiptap/vue-3'
-import { reactive } from 'vue';
+import {reactive} from 'vue'
+import {BubbleMenu} from '@tiptap/vue-3'
 import CommandButtonVue from './MenuCommands/CommandButton.vue';
-
 
 const props = defineProps({
     editor: Object
 })
 
+console.log(props.editor.chain())
 const Extensions = reactive([
     {
         icon: 'bold',
@@ -62,13 +62,11 @@ const Extensions = reactive([
         isActive: () => props.editor.isActive('orderedList')
     }
 ])
-
 </script>
 
+
 <style>
-.floating-menu {
-    position: relative;
-    right: 110%;
+.bubble-menu {
     box-sizing: border-box;
     background: #fff;
     border-radius: 6px;

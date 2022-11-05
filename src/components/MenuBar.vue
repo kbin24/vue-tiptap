@@ -4,10 +4,12 @@
             <div class="divider" v-if="item.type === 'divider'" :key="`divider${index}`" />
             <menu-item v-else :key="index" v-bind="item" />
         </template>
+        <el-button @click="addContent">test</el-button>
     </div>
 </template>
   
 <script >
+import { conforms } from 'lodash'
 import { reactive } from 'vue'
 import MenuItem from './MenuItem.vue'
 
@@ -215,8 +217,16 @@ export default {
 
 
         ])
+
+        const addContent = ()=>{
+            console.log(123);
+            // props.editor.chain().focus().setContent('<vue-component count="0"></vue-component>').run()
+            props.editor.chain().focus().setVueComponent().run()
+            // props.editor.chain().focus().toggleBold().run()
+        }
         return {
-            items
+            items,
+            addContent
         }
     },
 }
