@@ -21,6 +21,7 @@ import CommandButton from './MenuCommands/CommandButton.vue';
 import FloatingMenuVue from './FloatingMenu.vue';
 import BubbleMenuVue from './BubbleMenu.vue';
 import VueComponent from '../components/InteractiveNode/Extensions'
+import DraggableItem from './DraggableItem/DraggableItem';
 const CustomTableCell = TableCell.extend({
     addAttributes() {
         return {
@@ -60,7 +61,11 @@ export default defineComponent({
     setup(props, { emit }) {
         const editor = useEditor({
             // content: props.html,
-            // content: `<vue-component count="0"></vue-component>`,
+            content: `
+                <div data-type="draggable-item">
+                    <p>Follow by a fancy draggable item</p>
+                </div>
+            `,
             extensions: [
                 StarterKit,
                 Image,
@@ -71,7 +76,8 @@ export default defineComponent({
                 TableHeader,
                 CustomTableCell,
                 Placeholder,
-                VueComponent
+                VueComponent,
+                DraggableItem
             ],
             onUpdate: () => {
                 // console.log(editor.value.getHTML())
