@@ -1,4 +1,5 @@
 <template>
+    <el-button @click="getAttr">test</el-button>
     <div class="editor" v-if="editor" :style="{ width }">
         <MenuBar class="editor-header" :editor="editor"></MenuBar>
         <FloatingMenuVue :editor="editor"></FloatingMenuVue>
@@ -24,6 +25,7 @@ import VueComponent from '../components/InteractiveNode/Extensions'
 import DraggableItem from './DraggableItem/DraggableItem';
 import Paragraph from '@tiptap/extension-paragraph';
 import Image from '@tiptap/extension-image'
+import Heading from '@tiptap/extension-heading';
 const CustomTableCell = TableCell.extend({
     addAttributes() {
         return {
@@ -41,6 +43,8 @@ const CustomTableCell = TableCell.extend({
     }
 
 })
+
+
 
 export default defineComponent({
     components: {
@@ -67,6 +71,7 @@ export default defineComponent({
             //     <div data-type="draggable-item">
             //         <p>Follow by a fancy draggable item</p>
             //     </div>
+            //     <h1 data-id="123">test</h1>
             // `,
             extensions: [
                 StarterKit,
@@ -84,16 +89,27 @@ export default defineComponent({
                     draggable: true
                 })
             ],
-            onUpdate: () => {
+            editorProps: {
+                attributes: {
+                    class: 'hover-item',
+                },
+            },
+            onUpdate: (data) => {
+                console.log(data)
                 // console.log(editor.value.getHTML())
-                // console.log(editor.value.getJSON())
+                console.log(editor.value.getJSON())
                 // emit('update:html', editor.value.getHTML())
+                
             }
         })
 
+        const getAttr = ()=>{
+            // console.log(editor.getAttributes('h2'))
+        }
         console.log('123', editor)
         return {
-            editor
+            editor,
+            getAttr
         }
     }
 
@@ -292,8 +308,9 @@ export default defineComponent({
 }
 
 .ProseMirror {
+
     h2.is-empty::before,
-    h1.is-empty::before{
+    h1.is-empty::before {
         content: attr(data-placeholder);
         float: left;
         color: #adb5bd;

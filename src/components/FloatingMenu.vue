@@ -1,5 +1,5 @@
 <template>
-    <FloatingMenu :editor="editor" :tippyOptions="{placement: 'left'}">
+    <FloatingMenu :editor="editor" :tippyOptions="{duration: 300, placement: 'left'}">
         <div class="floating-menu">
             <template v-for="(item, index) in Extensions">
                 <CommandButtonVue v-bind="item" />

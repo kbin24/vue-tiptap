@@ -6,35 +6,29 @@ import { ref } from 'vue';
 
 // const editorHtml = ref('<p>tiptap editor demo</p><p>2222232323323</p><ul><li><p>131232232</p></li></ul>')
 
-const editorHtml1 = {
+const editorHtml = {
   type: 'doc',
   content:[
     {
-      type: 'bulletList',
+      type: 'heading',
+      attrs:{
+        level: 1,
+        'data-id': '123666'
+      },
       content: [
         {
-          type: 'listItem',
-          content: [
-            {
-              type: 'paragraph',
-              content:[
-                {
-                  type: 'text',
-                  text: '123'
-                }
-              ]
-            }
-          ]
+          type: 'text',
+          text: '123'
         }
       ]
     }
   ]
 }
 
-const editorHtml = `
-  <p>1233</p>
-  <img src="https://source.unsplash.com/8xznAGy4HcY/800x400" />
-`
+// const editorHtml = `
+//   <p>1233</p>
+//   <img src="https://source.unsplash.com/8xznAGy4HcY/800x400" />
+// `
 
 </script>
 
